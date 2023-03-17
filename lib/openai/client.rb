@@ -1,6 +1,7 @@
 module OpenAI
   class Client
     URI_BASE = "https://api.openai.com/".freeze
+    TIMEOUT = 60
 
     def initialize(access_token: nil, organization_id: nil)
       OpenAI.configuration.access_token = access_token if access_token
@@ -54,7 +55,8 @@ module OpenAI
     def self.get(path:)
       HTTParty.get(
         uri(path: path),
-        headers: headers
+        headers: headers,
+        timeout: TIMEOUT
       )
     end
 
@@ -62,6 +64,7 @@ module OpenAI
       HTTParty.post(
         uri(path: path),
         headers: headers,
+        timeout: TIMEOUT,
         body: parameters&.to_json
       )
     end
@@ -70,6 +73,7 @@ module OpenAI
       HTTParty.post(
         uri(path: path),
         headers: headers.merge({ "Content-Type" => "multipart/form-data" }),
+        timeout: TIMEOUT,
         body: parameters
       )
     end
@@ -77,7 +81,8 @@ module OpenAI
     def self.delete(path:)
       HTTParty.delete(
         uri(path: path),
-        headers: headers
+        headers: headers,
+        timeout: TIMEOUT
       )
     end
 
