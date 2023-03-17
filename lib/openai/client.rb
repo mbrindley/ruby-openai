@@ -1,7 +1,7 @@
 module OpenAI
   class Client
     URI_BASE = "https://api.openai.com/".freeze
-    TIMEOUT = 60
+    TIMEOUT = 120
 
     def initialize(access_token: nil, organization_id: nil)
       OpenAI.configuration.access_token = access_token if access_token
